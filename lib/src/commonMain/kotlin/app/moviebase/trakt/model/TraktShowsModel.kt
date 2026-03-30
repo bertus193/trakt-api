@@ -54,3 +54,11 @@ data class TraktTrendingShow(
     @SerialName("show") val show: TraktShow? = null,
     @SerialName("watchers") val watchers: Int? = null,
 )
+
+@Serializable
+data class TraktShowTranslation(
+    @SerialName("title") val title: String? = null,
+    @SerialName("overview") val overview: String? = null,
+    @SerialName("language") val language: String? = null,
+    @SerialName("country") val country: String? = null,
+)

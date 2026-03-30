@@ -7,6 +7,7 @@ import app.moviebase.trakt.core.parameterLimit
 import app.moviebase.trakt.core.parameterPage
 import app.moviebase.trakt.model.TraktRating
 import app.moviebase.trakt.model.TraktShow
+import app.moviebase.trakt.model.TraktShowTranslation
 import app.moviebase.trakt.model.TraktTrendingShow
 import io.ktor.client.HttpClient
 
@@ -51,6 +52,17 @@ class TraktShowsApi(private val client: HttpClient) {
     }
 
     suspend fun getRating(traktSlug: String): TraktRating = client.getByPaths(*pathShows(traktSlug, "ratings"))
+
+    /**
+     * Returns all translations for a show, including title and overview.
+     * URL: /shows/{id}/translations/{language}
+     *
+     * @see [Shows - Translations](https://trakt.docs.apiary.io/#reference/shows/translations/get-all-show-translations)
+     */
+    suspend fun getTranslations(
+        showId: String,
+        language: String,
+    ): List<TraktShowTranslation> = client.getByPaths(*pathShows(showId, "translations", language))
 
     private fun pathShows(traktSlug: String, vararg paths: String) = arrayOf("shows", traktSlug, *paths)
 }
